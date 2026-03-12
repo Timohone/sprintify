@@ -2,7 +2,7 @@
 
 ## 1. Scrum als Vorgehensmodell
 
-Scrum ist ein agiles Framework für die Produktentwicklung, das auf drei Säulen basiert: Transparenz, Überprüfung und Anpassung. Das Framework definiert drei Rollen (Product Owner, Scrum Master, Entwicklungsteam), drei Artefakte (Product Backlog, Sprint Backlog, Inkrement) und fünf Events (Sprint, Sprint Planning, Daily Scrum, Sprint Review, Sprint Retrospective) [Schwaber2020].
+Scrum ist ein agiles Framework für die Produktentwicklung, das auf drei Säulen basiert: Transparenz, Überprüfung und Anpassung. Das Framework definiert drei Verantwortlichkeiten (Product Owner, Scrum Master, Developers), drei Artefakte (Product Backlog, Sprint Backlog, Inkrement) und fünf Events (Sprint, Sprint Planning, Daily Scrum, Sprint Review, Sprint Retrospective) [Schwaber2020].
 
 Für ein Ein-Mann-Projekt passt das natürlich nicht eins zu eins. Die Anpassungen, die ich vorgenommen habe:
 

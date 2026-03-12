@@ -14,6 +14,7 @@ Abgabedatum: 25.04.2026
 
 ## Inhaltsverzeichnis
 
+Abkürzungsverzeichnis
 Abbildungsverzeichnis
 1. Einleitung
 2. Vorgehen
@@ -28,6 +29,7 @@ Abbildungsverzeichnis
 6. Kritische Würdigung
 Quellenverzeichnis
 Anhänge
+Selbstständigkeitserklärung
 
 ---
 
@@ -38,12 +40,10 @@ Anhänge
 | API | Application Programming Interface |
 | JWT | JSON Web Token |
 | MSAL | Microsoft Authentication Library |
-| RBAC | Rollenbasierte Zugriffskontrolle |
 | REST | Representational State Transfer |
 | SPA | Single Page Application |
 | SP | Story Points |
 | CSRF | Cross-Site Request Forgery |
-| CI/CD | Continuous Integration / Continuous Deployment |
 
 ---
 
@@ -78,21 +78,21 @@ Ich habe in diesem Projekt sowohl die Rolle des Projektleiters als auch die des 
 
 Ich habe mich für ein iteratives Vorgehen in Anlehnung an Scrum entschieden. Als Ein-Mann-Projekt habe ich das Framework vereinfacht: zweiwöchige Iterationen mit definierten Zielen, danach jeweils eine Besprechung der Ergebnisse mit meinem Vorgesetzten.
 
-Das Projekt lief in vier Phasen (Epics) ab:
+Das Projekt lief über rund acht Monate in vier Phasen ab:
 
 Phase 1, Analyse und Konzeption (Monat 1-2): Anforderungen mit dem Team aufnehmen, bestehende Tools am Markt evaluieren, Systemarchitektur und Technologien festlegen. In dieser Phase habe ich auch einen ersten UI-Prototyp erstellt.
 
-Phase 2, Backend-Entwicklung (Monat 3-5): Datenbankstruktur aufbauen, REST-API implementieren, Jira-Anbindung entwickeln, Authentifizierung und Autorisierung einrichten.
+Phase 2, Backend-Entwicklung (Monat 2-4): Datenbankstruktur aufbauen, REST-API implementieren, Jira-Anbindung entwickeln, Authentifizierung und Autorisierung einrichten.
 
-Phase 3, Frontend-Entwicklung (Monat 5-8): Die React-Oberfläche mit allen Modulen umsetzen: Dashboard, Kapazitätsplanung, Sprint Analytics, Sprint History, Teamverwaltung.
+Phase 3, Frontend-Entwicklung (Monat 4-6): Die React-Oberfläche mit allen Modulen umsetzen: Dashboard, Kapazitätsplanung, Sprint Analytics, Sprint History, Teamverwaltung.
 
-Phase 4, Integration und Deployment (Monat 9-11): Deployment auf Azure App Service, Tests mit echten Jira-Daten, Fehlerbehebung, Performance-Optimierung.
+Phase 4, Integration und Deployment (Monat 6-8): Deployment auf Azure App Service, Tests mit echten Jira-Daten, Fehlerbehebung, Performance-Optimierung.
 
 Das iterative Vorgehen hat sich gelohnt. Die Anforderungen haben sich im Projektverlauf mehrfach geändert, vor allem bei der Jira-Integration. Jira ist je nach Projekt unterschiedlich konfiguriert, und vieles davon zeigt sich erst, wenn man mit echten Daten arbeitet.
 
 ## 3 Aktuelle Trends
 
-Scrum sieht die Velocity als Planungsgrundlage vor, aber in der Praxis reicht das nicht. Teams müssen Abwesenheiten, Teilzeitpensen und nicht-projektbezogene Tätigkeiten berücksichtigen, wenn sie einen Sprint planen. Excel-Listen sind dafür ein verbreitetes, aber umständliches Mittel.
+In der Praxis nutzen die meisten Scrum-Teams die Velocity als Planungsgrundlage. Für eine realistische Sprint-Planung reicht das allein aber nicht. Teams müssen Abwesenheiten, Teilzeitpensen und nicht-projektbezogene Tätigkeiten berücksichtigen, wenn sie einen Sprint planen. Excel-Listen sind dafür ein verbreitetes, aber umständliches Mittel.
 
 Am Markt gibt es Tools wie Tempo Timesheets, Jira Advanced Roadmaps oder Forecast.app. Diese decken Teilbereiche ab. Was ich bei der Evaluation nicht gefunden habe, war ein Tool, das wochenbasierte Kapazitätsplanung mit automatischer Jira-Synchronisation und Sprint Analytics in einer Oberfläche verbindet. Die kommerziellen Lösungen sind ausserdem für kleinere Teams oft zu teuer oder zu aufwendig in der Einrichtung.
 
@@ -108,7 +108,7 @@ Immer mehr Teams ersetzen manuelle Methoden (Excel, Confluence-Seiten) durch spe
 
 ### 4.1 Architektur und Technologieentscheidungen
 
-Sprintify ist eine Client-Server-Applikation. Das Backend läuft auf Node.js mit Express.js und nutzt Sequelize als ORM für PostgreSQL. Das Frontend ist eine React 18 SPA, geschrieben in TypeScript mit Vite als Build-Tool und Tailwind CSS für das Styling.
+Sprintify ist eine Client-Server-Applikation. Das Backend läuft auf Node.js mit Express.js [Express2024] und nutzt Sequelize [Sequelize2024] als ORM für PostgreSQL. Das Frontend ist eine React 19 SPA [React2024], geschrieben in TypeScript mit Vite als Build-Tool und Tailwind CSS für das Styling.
 
 Die API besteht aus 10 Route-Modulen (unter `/api/*`), einer Service-Schicht für Jira-Synchronisation sowie Middleware für Sicherheit (JWT-Authentifizierung, CSRF-Schutz, Rate Limiting, Input-Sanitisierung). Die Datenbank hat sieben Modelle: User, Project, ProjectUser, Sprint, UserStory, CapacityPlan und Retrospective (siehe Abbildung 1 und 2).
 
@@ -116,7 +116,7 @@ Node.js habe ich gewählt, weil ich bereits Erfahrung mit JavaScript/TypeScript 
 
 ### 4.2 Jira-Integration und Datensynchronisation
 
-Die Jira-Anbindung war der Teil der Arbeit, der mir am meisten Kopfzerbrechen bereitet hat. Sprintify kommuniziert über zwei APIs mit Jira: die REST API v2 für Issues und die Agile API v1.0 für Boards und Sprints. Jedes Projekt kann eine eigene Jira-Instanz haben, da verschiedene Teams verschiedene Setups verwenden.
+Die Jira-Anbindung war der Teil der Arbeit, der mir am meisten Kopfzerbrechen bereitet hat. Sprintify kommuniziert über zwei APIs mit Jira: die REST API v2 für Issues [Atlassian2024a] und die Agile API v1.0 für Boards und Sprints [Atlassian2024b]. Jedes Projekt kann eine eigene Jira-Instanz haben, da verschiedene Teams verschiedene Setups verwenden.
 
 Die Synchronisation läuft in drei Schritten: Zuerst werden über die Agile API die Boards und deren Sprints abgerufen. Dann werden alle Issues pro Sprint synchronisiert. Story Points liest das System über ein konfigurierbares Custom Field aus (Standard: `customfield_10016`). Der Jira-Status wird auf ein einheitliches Schema gemappt (To Do, In Progress, Done). Zuletzt werden Jira-Benutzer anhand ihrer Account-ID oder E-Mail-Adresse mit lokalen Benutzern verknüpft.
 
@@ -146,7 +146,7 @@ Die Sprint History zeigt die Velocity über alle abgeschlossenen Sprints als Bal
 
 ### 4.5 Sicherheit und Zugriffskontrolle
 
-Die Authentifizierung läuft über Microsoft Entra ID mit MSAL. Im Frontend wird der OAuth 2.0 Authorization Code Flow verwendet, im Backend werden die JWT-Tokens validiert. Als Fallback gibt es eine lokale JWT-basierte Authentifizierung.
+Die Authentifizierung läuft über Microsoft Entra ID mit MSAL [Microsoft2024]. Im Frontend wird der OAuth 2.0 Authorization Code Flow verwendet, im Backend werden die JWT-Tokens validiert. Als Fallback gibt es eine lokale JWT-basierte Authentifizierung.
 
 Die Autorisierung arbeitet auf zwei Ebenen. Global gibt es die Rollen Admin und Member. Auf Projektebene steuert die ProjectUser-Tabelle den Zugriff mit drei Rollen: Admin, Member und Viewer. Admins können Projekte und Benutzer verwalten, Viewer haben nur Lesezugriff.
 

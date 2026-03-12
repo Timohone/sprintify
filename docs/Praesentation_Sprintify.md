@@ -86,7 +86,7 @@ Sprechnotiz: Hier ein konkretes Beispiel aus dem Alltag bringen. Zum Beispiel: "
 
 - Deployment auf Azure App Service
 - Ein-Mann-Projekt (Projektleitung und Entwicklung in Personalunion)
-- 12 Monate Projektlaufzeit
+- 8 Monate Projektlaufzeit
 
 ---
 
@@ -109,16 +109,16 @@ Keines dieser Tools verbindet wochenbasierte Kapazitätsplanung mit automatische
 **Methodik: Iteratives Vorgehen (angelehnt an Scrum)**
 
 - Zweiwöchige Iterationen mit definierten Zielen
-- Vereinfachtes Scrum: Ein-Mann-Projekt, keine Daily Standups, aber regelmässige Besprechung mit dem Auftraggeber
+- Vereinfachtes Scrum: Ein-Mann-Projekt, keine Daily Standups, aber regelmässige Besprechung mit dem Vorgesetzten
 
 **Vier Projektphasen:**
 
 | Phase | Zeitraum | Fokus |
 |-------|----------|-------|
 | 1 -- Analyse & Konzeption | Monat 1--2 | Anforderungen, Evaluation, Architektur, UI-Prototyp |
-| 2 -- Backend-Entwicklung | Monat 3--5 | DB-Struktur, REST-API, Jira-Anbindung, Auth |
-| 3 -- Frontend-Entwicklung | Monat 5--8 | React-SPA, alle Module |
-| 4 -- Integration & Deployment | Monat 9--11 | Azure, Tests mit echten Daten, Bugfixes |
+| 2 -- Backend-Entwicklung | Monat 2--4 | DB-Struktur, REST-API, Jira-Anbindung, Auth |
+| 3 -- Frontend-Entwicklung | Monat 4--6 | React-SPA, alle Module |
+| 4 -- Integration & Deployment | Monat 6--8 | Azure, Tests mit echten Daten, Bugfixes |
 
 Sprechnotiz: Erklären, warum Scrum als Einzelperson trotzdem Sinn ergibt: feste Iterationen erzwingen regelmässige Standortbestimmung. Erwähnen, dass die Anforderungen sich im Projektverlauf geändert haben, vor allem bei der Jira-Integration.
 
@@ -148,7 +148,7 @@ Sprechnotiz: Erklären, warum Scrum als Einzelperson trotzdem Sinn ergibt: feste
 **Technologie-Stack:**
 
 - Backend: Node.js, Express.js, Sequelize, PostgreSQL
-- Frontend: React 18, TypeScript, Vite, Tailwind CSS
+- Frontend: React 19, TypeScript, Vite, Tailwind CSS
 - Auth: Microsoft Entra ID (MSAL) + JWT Fallback
 - Deployment: Azure App Service
 
@@ -288,29 +288,28 @@ Sprechnotiz: Für jede Ansicht kurz erklären, welche Frage sie beantwortet. Ove
 **Phase 1 -- Analyse & Konzeption (Monat 1--2):**
 
 - Sprint 1--2: Anforderungserhebung, Interviews mit dem Team
-- Sprint 3--4: Marktanalyse, Technologieevaluation, Architekturentscheid
+- Sprint 3: Marktanalyse, Technologieevaluation, Architekturentscheid
 - Ergebnis: UI-Prototyp, Architekturskizze, Technologie-Stack definiert
 
-**Phase 2 -- Backend-Entwicklung (Monat 3--5):**
+**Phase 2 -- Backend-Entwicklung (Monat 2--4):**
 
-- Sprint 5--6: Datenmodell, Grundgerüst Express-API, Auth-Middleware
-- Sprint 7--8: Jira-Integration (erster Versuch, Probleme mit Custom Fields)
-- Sprint 9--10: Jira-Sync überarbeitet, Scheduler implementiert
+- Sprint 4--5: Datenmodell, Grundgerüst Express-API, Auth-Middleware
+- Sprint 6--7: Jira-Integration (erster Versuch, Probleme mit Custom Fields)
+- Sprint 8: Jira-Sync überarbeitet, Scheduler implementiert
 - Ergebnis: Funktionierende API mit Jira-Anbindung
 
-**Phase 3 -- Frontend-Entwicklung (Monat 5--8):**
+**Phase 3 -- Frontend-Entwicklung (Monat 4--6):**
 
-- Sprint 11--12: Dashboard, Projektverwaltung, Sprintübersicht
-- Sprint 13--14: Kapazitätsplanung, wochenbasierte Eingabe
-- Sprint 15--16: Sprint Analytics (Burndown, Velocity, Compare)
-- Sprint 17--18: Team Performance, Sprint History, Forecast
+- Sprint 9--10: Dashboard, Projektverwaltung, Sprintübersicht
+- Sprint 11: Kapazitätsplanung, wochenbasierte Eingabe
+- Sprint 12--13: Sprint Analytics (Burndown, Velocity, Compare, Team Performance)
 - Ergebnis: Vollständige React-SPA
 
-**Phase 4 -- Integration & Deployment (Monat 9--11):**
+**Phase 4 -- Integration & Deployment (Monat 6--8):**
 
-- Sprint 19--20: Azure App Service Deployment, CI/CD Pipeline
-- Sprint 21--22: Tests mit Produktivdaten, Bugfixes
-- Sprint 23--24: Performance-Optimierung, SP-Empfehlung, Feinschliff
+- Sprint 14: Azure App Service Deployment
+- Sprint 15: Tests mit Produktivdaten, Bugfixes
+- Sprint 16: SP-Empfehlung, Performance-Optimierung, Feinschliff
 - Ergebnis: Produktionsreife Applikation
 
 Sprechnotiz: Hier den roten Faden zeigen. Was war geplant, was hat sich geändert? Die Jira-Integration hat mehr Sprints gebraucht als geplant. Die SP-Empfehlung kam als Anforderung erst spät dazu. Das zeigt, warum iteratives Vorgehen richtig war.

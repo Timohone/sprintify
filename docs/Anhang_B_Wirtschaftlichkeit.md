@@ -2,11 +2,11 @@
 
 ## 1. Entwicklungskosten
 
-Die Entwicklung von Sprintify erstreckte sich über 12 Monate Projektlaufzeit mit geschätzt 450 Stunden Eigenleistung neben dem regulären Arbeitspensum. Der gesamte Technology Stack basiert auf Open-Source-Technologien: VS Code als Editor, Node.js und Express.js als Backend-Framework, React für das Frontend, PostgreSQL als Datenbank und Git für die Versionskontrolle. Lizenzkosten für Entwicklungstools fielen keine an.
+Die Entwicklung von Sprintify erstreckte sich über rund acht Monate Projektlaufzeit mit geschätzt 300 Stunden Eigenleistung neben dem regulären Arbeitspensum. Der gesamte Technology Stack basiert auf Open-Source-Technologien: VS Code als Editor, Node.js und Express.js als Backend-Framework, React für das Frontend, PostgreSQL als Datenbank und Git für die Versionskontrolle. Lizenzkosten für Entwicklungstools fielen keine an.
 
 Externe Dienstleister wurden nicht beigezogen. Sämtliche eingesetzten npm-Pakete stehen unter permissiven Open-Source-Lizenzen (MIT, Apache 2.0) und verursachen keine laufenden Lizenzkosten. Die Jira-Anbindung nutzt die REST API von Atlassian, die im bestehenden Jira-Cloud-Abonnement der Netcloud AG enthalten ist.
 
-Da die Entwicklung im Rahmen dieser Diplomarbeit erfolgte, fallen die Personalkosten nicht als zusätzliche Projektkosten an. Bei einer hypothetischen Vollkostenrechnung mit einem internen Stundensatz von CHF 120 läge der Entwicklungsaufwand bei CHF 54'000 — ein Betrag, der bei einer Eigenentwicklung ausserhalb einer Diplomarbeit gegen kommerzielle Alternativen abgewogen werden müsste.
+Da die Entwicklung im Rahmen dieser Diplomarbeit erfolgte, fallen die Personalkosten nicht als zusätzliche Projektkosten an. Bei einer hypothetischen Vollkostenrechnung mit einem internen Stundensatz von CHF 120 läge der Entwicklungsaufwand bei CHF 36'000 — ein Betrag, der bei einer Eigenentwicklung ausserhalb einer Diplomarbeit gegen kommerzielle Alternativen abgewogen werden müsste.
 
 ## 2. Laufende Betriebskosten
 
@@ -34,9 +34,9 @@ Die Bandbreite ergibt sich aus der nutzungsabhängigen Abrechnung von Azure. Der
 
 **Sprint-Planung vorher (mit Excel):**
 
-- Kapazitätsdaten sammeln: ca. 15 Minuten pro Person pro Sprint
-- Excel aktualisieren und konsolidieren: ca. 30 Minuten (Scrum Master)
-- Bei 8 Personen und 26 Sprints pro Jahr: ca. 80–100 Stunden Gesamtaufwand jährlich
+- Kapazitätsdaten bei Teammitgliedern erfragen und zusammentragen: ca. 20 Minuten pro Person pro Sprint
+- Excel aktualisieren, konsolidieren und Fehler korrigieren: ca. 45 Minuten (Scrum Master)
+- Bei 8 Personen und 26 Sprints pro Jahr: ca. 85–95 Stunden Gesamtaufwand jährlich
 
 **Sprint-Planung mit Sprintify:**
 
