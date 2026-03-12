@@ -14,6 +14,7 @@ Abgabedatum: 25.04.2026
 
 ## Inhaltsverzeichnis
 
+Abbildungsverzeichnis
 1. Einleitung
 2. Vorgehen
 3. Aktuelle Trends
@@ -25,6 +26,8 @@ Abgabedatum: 25.04.2026
    4.5 Sicherheit und Zugriffskontrolle
 5. Empfehlung und Schlussfolgerung
 6. Kritische Würdigung
+Quellenverzeichnis
+Anhänge
 
 ---
 
@@ -44,11 +47,24 @@ Abgabedatum: 25.04.2026
 
 ---
 
+## Abbildungsverzeichnis
+
+| Nr. | Bezeichnung |
+|-----|------------|
+| Abbildung 1 | Systemarchitektur Sprintify |
+| Abbildung 2 | Datenmodell (Entity-Relationship-Diagramm) |
+| Abbildung 3 | Kapazitätsplanungsansicht mit SP-Empfehlung |
+| Abbildung 4 | Sprint Analytics — Burndown-Chart |
+
+*Abbildungen befinden sich in Anhang D: Technische Dokumentation bzw. werden als Screenshots im finalen PDF eingefügt.*
+
+---
+
 ## 1 Einleitung
 
 Die Netcloud AG ist ein Schweizer IT-Dienstleister mit Fokus auf Cloud-Infrastruktur und Managed Services. Ich arbeite als Cloud Engineer in der Abteilung Public Cloud Solutions, wo wir Kundenprojekte rund um Microsoft Azure betreuen.
 
-Unsere Projekte laufen nach Scrum. Die Sprint-Planung haben wir bisher in Jira und Kapazitätsverteilung haben wir bisher mit Excel-Tabellen gelöst, die über verschiedene SharePoint-Ordner verstreut waren. Das hat funktioniert, aber nur knapp. Wenn jemand im Team gefragt hat, wie viele Story Points wir im nächsten Sprint realistisch schaffen, musste man sich die Antwort mehr oder weniger zusammenreimen. Historische Velocity-Daten lagen nirgends aufbereitet vor, und die Kapazität einzelner Teammitglieder (Ferien, Teilzeit, interne Projekte) floss nur informell in die Planung ein.
+Unsere Projekte laufen nach Scrum. Die Sprint-Planung lief bisher über Jira, die Kapazitätsverteilung über Excel-Tabellen, verstreut auf verschiedenen SharePoint-Ordnern. Das hat funktioniert, aber nur knapp. Wenn jemand im Team gefragt hat, wie viele Story Points wir im nächsten Sprint realistisch schaffen, musste man sich die Antwort mehr oder weniger zusammenreimen. Historische Velocity-Daten lagen nirgends aufbereitet vor, und die Kapazität einzelner Teammitglieder (Ferien, Teilzeit, interne Projekte) floss nur informell in die Planung ein.
 
 Der Auftrag für diese Diplomarbeit war, eine Webanwendung zu bauen, die diese Lücke schliesst:
 
@@ -84,13 +100,17 @@ Im Bereich Deployment hat sich die Bereitstellung über Cloud-Plattformen wie Az
 
 Für die Authentifizierung wird zunehmend OpenID Connect mit Microsoft Entra ID verwendet. Damit lässt sich Single Sign-On umsetzen, und die Benutzerverwaltung entfällt grösstenteils, da keine separaten Zugangsdaten nötig sind.
 
+Velocity wird im Scrum Guide selbst nicht als Pflichtmetrik definiert, ist aber in der Praxis das verbreitetste Werkzeug zur Sprint-Planung. Der Scrum Guide betont empirische Prozesssteuerung (Transparenz, Inspektion, Adaption), was eine datenbasierte Kapazitätsplanung nahelegt [Schwaber2020].
+
+Immer mehr Teams ersetzen manuelle Methoden (Excel, Confluence-Seiten) durch spezialisierte Tools, die historische Daten automatisch auswerten. Die Herausforderung liegt dabei oft nicht in der Datenerhebung selbst, sondern in der Integration mit bestehenden Systemen wie Jira, da jede Organisation eigene Konfigurationen verwendet.
+
 ## 4 Ergebnisse
 
 ### 4.1 Architektur und Technologieentscheidungen
 
 Sprintify ist eine Client-Server-Applikation. Das Backend läuft auf Node.js mit Express.js und nutzt Sequelize als ORM für PostgreSQL. Das Frontend ist eine React 18 SPA, geschrieben in TypeScript mit Vite als Build-Tool und Tailwind CSS für das Styling.
 
-Die API besteht aus 10 Route-Modulen (unter `/api/*`), einer Service-Schicht für Jira-Synchronisation sowie Middleware für Sicherheit (JWT-Authentifizierung, CSRF-Schutz, Rate Limiting, Input-Sanitisierung). Die Datenbank hat sieben Modelle: User, Project, ProjectUser, Sprint, UserStory, CapacityPlan und Retrospective.
+Die API besteht aus 10 Route-Modulen (unter `/api/*`), einer Service-Schicht für Jira-Synchronisation sowie Middleware für Sicherheit (JWT-Authentifizierung, CSRF-Schutz, Rate Limiting, Input-Sanitisierung). Die Datenbank hat sieben Modelle: User, Project, ProjectUser, Sprint, UserStory, CapacityPlan und Retrospective (siehe Abbildung 1 und 2).
 
 Node.js habe ich gewählt, weil ich bereits Erfahrung mit JavaScript/TypeScript hatte und die asynchrone Verarbeitung gut zur Jira-API passt. PostgreSQL war naheliegend, weil die Datenstruktur relational ist. Besonders die Many-to-Many-Beziehung zwischen Usern und Projekten profitiert davon.
 
@@ -108,13 +128,13 @@ Pro Teammitglied und Sprint kann die verfügbare Arbeitszeit wochenweise aufgesc
 
 Wenn ein Sprint zum ersten Mal aufgerufen wird, erstellt das System automatisch leere Kapazitätspläne für alle Projektmitglieder. Die Wochen orientieren sich am Start- und Enddatum des Sprints. Team-Leads oder Mitarbeiter bearbeiten die Pläne direkt in der Weboberfläche und sehen die aggregierten Zahlen: Gesamtkapazität des Teams, Durchschnitt pro Person und Aufteilung nach Kategorie.
 
-Aus den Kapazitätsdaten leitet Sprintify eine Story-Point-Empfehlung für den kommenden Sprint ab. Die Formel dafür lautet: empfohlene SP = durchschnittliche Velocity multipliziert mit dem Kapazitätsfaktor. Der Kapazitätsfaktor ergibt sich aus dem Verhältnis der aktuellen Sprint-Kapazität zur durchschnittlichen Kapazität der letzten sechs abgeschlossenen Sprints. Wenn das Team im nächsten Sprint also weniger verfügbare Stunden hat als im Schnitt, fällt die Empfehlung entsprechend tiefer aus. Falls keine historischen Kapazitätsdaten vorliegen, greift das System auf die durchschnittliche Velocity zurück. Die Empfehlung wird direkt auf der Kapazitätsplanungsseite angezeigt, zusammen mit der aktuellen und der historischen Kapazität.
+Aus den Kapazitätsdaten leitet Sprintify eine Story-Point-Empfehlung für den kommenden Sprint ab. Die Formel dafür lautet: empfohlene SP = durchschnittliche Velocity multipliziert mit dem Kapazitätsfaktor. Der Kapazitätsfaktor ergibt sich aus dem Verhältnis der aktuellen Sprint-Kapazität zur durchschnittlichen Kapazität der letzten sechs abgeschlossenen Sprints. Wenn das Team im nächsten Sprint also weniger verfügbare Stunden hat als im Schnitt, fällt die Empfehlung entsprechend tiefer aus. Falls keine historischen Kapazitätsdaten vorliegen, greift das System auf die durchschnittliche Velocity zurück. Die Empfehlung wird direkt auf der Kapazitätsplanungsseite angezeigt, zusammen mit der aktuellen und der historischen Kapazität (siehe Abbildung 3).
 
 ### 4.4 Sprint Analytics und Reporting
 
 Das Analytics-Modul hat vier Ansichten.
 
-Die Overview zeigt die Kennzahlen des aktuellen Sprints (Story Points, Completion Rate, verbleibende Tage) und ein Burndown-Chart. Das Chart vergleicht die ideale Abarbeitungslinie mit dem tatsächlichen Verlauf, der aus den Abschlusszeitpunkten der einzelnen Stories berechnet wird.
+Die Overview zeigt die Kennzahlen des aktuellen Sprints (Story Points, Completion Rate, verbleibende Tage) und ein Burndown-Chart (siehe Abbildung 4). Das Chart vergleicht die ideale Abarbeitungslinie mit dem tatsächlichen Verlauf, der aus den Abschlusszeitpunkten der einzelnen Stories berechnet wird.
 
 Unter Compare lässt sich die aktuelle Sprint-Velocity dem vorherigen Sprint gegenüberstellen und mit Langzeit-Benchmarks vergleichen (Durchschnitt und Bestwert aller abgeschlossenen Sprints). So sieht man, ob sich die Teamleistung verbessert, verschlechtert oder gleichbleibt.
 
@@ -161,6 +181,43 @@ Das Projekt alleine umzusetzen hatte zwei Seiten. Ich konnte Entscheidungen schn
 Die Applikation ist aktuell als Single-Tenant-Lösung aufgebaut. Für den Einsatz bei der Netcloud AG reicht das. Falls Sprintify aber einmal bei mehreren Organisationen eingesetzt werden soll, müsste eine Mandantentrennung ergänzt werden, zum Beispiel über ein Company-Modell mit separaten Schemas pro Mandant.
 
 Trotz dieser Einschränkungen bin ich zufrieden mit dem Ergebnis. Das Tool löst ein konkretes Problem, das uns im Alltag regelmässig gebremst hat. Was ich aus dem Projekt vor allem mitgenommen habe: Die grösste Herausforderung bei Integrationsprojekten steckt selten in der eigenen Codebasis. Sie steckt in den Eigenheiten und Inkonsistenzen des Systems, an das man anbindet.
+
+## Quellenverzeichnis
+
+[Schwaber2020]
+Schwaber, Ken; Sutherland, Jeff: The Scrum Guide. The Definitive Guide to Scrum: The Rules of the Game. November 2020.
+https://scrumguides.org/scrum-guide.html , 15.01.2026/10:00
+
+[Atlassian2024a]
+Atlassian: Jira Cloud REST API (v2). API-Dokumentation.
+https://developer.atlassian.com/cloud/jira/platform/rest/v2/ , 10.03.2025/14:30
+
+[Atlassian2024b]
+Atlassian: Jira Software Cloud Agile REST API. API-Dokumentation.
+https://developer.atlassian.com/cloud/jira/software/rest/ , 10.03.2025/14:45
+
+[Microsoft2024]
+Microsoft: Microsoft Authentication Library (MSAL) Overview. Dokumentation.
+https://learn.microsoft.com/en-us/entra/identity-platform/msal-overview , 20.06.2025/09:15
+
+[Express2024]
+OpenJS Foundation: Express.js — Fast, unopinionated, minimalist web framework for Node.js.
+https://expressjs.com/ , 05.04.2025/11:00
+
+[React2024]
+Meta Platforms: React — A JavaScript library for building user interfaces.
+https://react.dev/ , 05.04.2025/11:30
+
+[Sequelize2024]
+Sequelize: Sequelize ORM — Feature-rich ORM for Node.js.
+https://sequelize.org/ , 05.04.2025/12:00
+
+## Anhänge
+
+- **Anhang A:** Theorie- und Methodenreflexion
+- **Anhang B:** Wirtschaftlichkeit
+- **Anhang C:** Visierter Antrag zur Diplomarbeit *(vom Auftraggeber und Studiengangleiter unterschrieben — separat beiliegend)*
+- **Anhang D:** Technische Dokumentation (Architektur, Datenmodell, API-Übersicht)
 
 ---
 
