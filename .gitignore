@@ -6,3 +6,9 @@ build/
 .DS_Store
 coverage/
 .claude/
+
+# Render-Toolchain (lokal, nicht versionieren)
+docs/.pptx-venv/
+# Office-Lock-/Temp-Dateien
+~$*
+*.tmp

@@ -5,13 +5,13 @@
 ```mermaid
 graph TB
     subgraph Client["Frontend (Browser)"]
-        SPA["React 18 SPA<br/>TypeScript, Vite, Tailwind CSS"]
+        SPA["React 19 SPA<br/>TypeScript, Vite, Tailwind CSS"]
     end
 
     subgraph Azure["Azure Cloud"]
         subgraph Backend["Backend (Node.js)"]
             Express["Express.js Server"]
-            MW["Middleware Stack<br/>JWT Auth, CSRF, Rate Limiting,<br/>Input Sanitization"]
+            MW["Middleware<br/>JWT Auth (Entra ID),<br/>Helmet, CORS"]
             Routes["Route-Module<br/>auth, projects, sprints,<br/>userStories, capacityPlans,<br/>users, jira, statistics,<br/>retrospectives, export"]
             Services["Services<br/>JiraService, JiraSyncService,<br/>SyncScheduler"]
         end
@@ -35,7 +35,7 @@ graph TB
     Scheduler -->|"alle 15 Min"| Services
 ```
 
-Die Applikation folgt einer klassischen Three-Tier-Architektur. Das Frontend ist eine statische React-SPA, die auf Azure App Service gehostet wird und per REST-API mit dem Express.js-Backend kommuniziert. Die Authentifizierung erfolgt via Microsoft Entra ID (MSAL.js im Frontend, JWT-Validierung im Backend). Die Jira-Integration nutzt Basic Auth mit API-Tokens pro Projekt, was eine Multi-Projekt-Konfiguration mit unterschiedlichen Jira-Instanzen ermöglicht.
+Die Applikation folgt einer klassischen Three-Tier-Architektur. Das Frontend ist eine statische React-SPA, die auf Azure App Service gehostet wird und per REST-API mit dem Express.js-Backend kommuniziert. Die Authentifizierung erfolgt via Microsoft Entra ID (MSAL.js im Frontend, JWT-Validierung über jwks-rsa im Backend). Als Sicherheitsbaseline kommen Helmet (HTTP-Security-Headers) und eine restriktive CORS-Konfiguration zum Einsatz. Weiterführende Schutzmassnahmen wie CSRF-Token-Validierung, Rate Limiting und Input-Sanitisierung sind als Härtungsschritt für die produktive Phase vorgesehen. Die Jira-Integration nutzt Basic Auth mit API-Tokens pro Projekt, was eine Multi-Projekt-Konfiguration mit unterschiedlichen Jira-Instanzen ermöglicht.
 
 ## 2. Datenmodell
 

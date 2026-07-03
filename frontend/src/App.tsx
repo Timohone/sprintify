@@ -12,20 +12,20 @@ import { ProjectSettings } from './pages/ProjectSettings';
 import { SprintAnalytics } from './pages/SprintAnalytics';
 import { Retrospectives } from './pages/Retrospectives';
 import { Button } from './components/ui/button';
+import { Logo } from './components/Logo';
 import { loginRequest } from './auth/msalConfig';
-import { Zap } from 'lucide-react';
 
 function LoginPage() {
   const { instance } = useMsal();
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
       <div className="text-center space-y-8">
-        <div className="space-y-3">
-          <div className="mx-auto w-16 h-16 rounded-2xl bg-indigo-500 flex items-center justify-center shadow-lg shadow-indigo-500/30">
-            <Zap size={32} className="text-white" />
+        <div className="space-y-4">
+          <div className="mx-auto w-20 h-20 flex items-center justify-center">
+            <Logo size={120} />
           </div>
           <h1 className="text-5xl font-bold text-white tracking-tight">Sprintify</h1>
-          <p className="text-lg text-slate-400">Capacity Planning & Sprint Analysis</p>
+          <p className="text-lg text-slate-400">Capacity Planning & Sprint Analytics</p>
         </div>
         <Button
           size="lg"

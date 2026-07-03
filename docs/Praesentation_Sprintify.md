@@ -26,13 +26,14 @@ Zielzeit: 45--60 Minuten
 1. Vorstellung und Kontext
 2. Problemstellung und Auftrag
 3. Vorgehen und Projektplanung
-4. Architektur und Technologieentscheidungen
-5. Ergebnisse: Die Module im Detail
-6. Sprints und Entwicklungsprozess
-7. Live-Demo
-8. Kritische Würdigung
-9. Persönliche Reflexion
-10. Fazit und Empfehlung
+4. KI als Co-Engineer (Methodik)
+5. Architektur und Technologieentscheidungen
+6. Ergebnisse: Die Module im Detail
+7. Sprints und Entwicklungsprozess
+8. Live-Demo
+9. Kritische Würdigung
+10. Persönliche Reflexion
+11. Fazit und Empfehlung
 
 ---
 
@@ -124,13 +125,43 @@ Sprechnotiz: Erklären, warum Scrum als Einzelperson trotzdem Sinn ergibt: feste
 
 ---
 
+### Folie 7b -- KI als Co-Engineer (2 min)
+
+**KI-gestützte Entwicklung als bewusste methodische Wahl**
+
+- Hintergrund: Cloud Engineer mit jahrelanger Erfahrung in JavaScript/TypeScript und Azure
+- Werkzeug: Claude Code (Anthropic) als Co-Engineer im Dialog-Modus
+- Eingesetzt für: Boilerplate, repetitive UI-Komponenten, Dokumentations-Entwürfe, Architektur-Sparring
+
+**Mein Arbeitszyklus:**
+
+1. Anforderung präzise formulieren
+2. Architektur und Kontext bereitstellen
+3. KI generiert Vorschlag
+4. Code-Review Zeile für Zeile
+5. Manuell anpassen + an Architektur ausrichten
+6. Gegen echte Daten validieren
+
+Eigenleistung: Schritte 1, 2, 4, 5, 6. Beschleunigung: Schritt 3.
+
+**Warum transparent?**
+
+- 2026 ist KI-gestützte Entwicklung Praxis-Standard, kein Hilfsmittel zweiter Klasse
+- KI ersetzt Fachkompetenz nicht — sie verstärkt sie bei kritischer Anwendung
+- Halluzinationen, Sicherheitslücken in Vorschlägen, generischer Code: ohne Review entstehen Probleme
+- Detaillierte Reflexion und Chat-Protokoll in Anhang E des Abstracts
+
+Sprechnotiz: Hier ist Ehrlichkeit der Trumpf. Nicht apologetisch ("ich habe nur ein bisschen KI verwendet") und nicht prahlerisch ("die KI hat alles für mich gemacht"), sondern sachlich: KI als modernes Werkzeug, das ich gezielt eingesetzt und kritisch überwacht habe. Diese Folie nimmt potenziellen Fragen aus dem Expertengespräch den Wind aus den Segeln.
+
+---
+
 ### Folie 8 -- Architekturübersicht (3 min)
 
 **Grafik: Systemarchitektur (Client-Server)**
 
 ```
 ┌─────────────────┐     ┌──────────────────────┐     ┌──────────┐
-│  React 18 SPA   │────>│  Node.js / Express    │────>│PostgreSQL│
+│  React 19 SPA   │────>│  Node.js / Express    │────>│PostgreSQL│
 │  TypeScript     │<────│  Sequelize ORM        │<────│          │
 │  Vite + Tailwind│     │  10 Route-Module      │     └──────────┘
 └─────────────────┘     │  Middleware-Stack      │
@@ -188,11 +219,17 @@ Sprechnotiz: Kurz halten. Die Experten brauchen das Datenmodell als Grundlage, u
 - Global: Admin und Member (Admin kann Projekte/User verwalten)
 - Pro Projekt: Admin, Member, Viewer (über ProjectUser-Tabelle)
 
-**Sicherheits-Middleware:**
+**Sicherheits-Baseline:**
 
-- CSRF-Schutz (@dr.pogodin/csurf)
-- Rate Limiting
-- Input-Sanitisierung
+- Helmet (HTTP-Security-Headers, CSP, X-Frame-Options, HSTS)
+- CORS mit konfigurierbarem Origin und Credentials-Flag
+- JWT-Validierung via jwks-rsa gegen Entra-ID-Public-Keys
+
+**Geplante Erweiterungen für produktiven Rollout:**
+
+- CSRF-Token-Validierung
+- Rate Limiting auf API-Ebene
+- Erweiterte Input-Sanitisierung
 
 **Single-Tenant:** Eine Instanz pro Organisation, keine Mandantentrennung nötig für den aktuellen Einsatz bei der Netcloud AG
 
@@ -281,7 +318,7 @@ Sprechnotiz: Für jede Ansicht kurz erklären, welche Frage sie beantwortet. Ove
 
 ---
 
-### Folie 15 -- Sprints und Entwicklungsprozess (5 min)
+### Folie 15 -- Sprints und Entwicklungsprozess (4 min)
 
 **Wie habe ich Sprintify entwickelt? Zweiwöchige Sprints, angelehnt an Scrum.**
 
@@ -312,7 +349,7 @@ Sprechnotiz: Für jede Ansicht kurz erklären, welche Frage sie beantwortet. Ove
 - Sprint 16: SP-Empfehlung, Performance-Optimierung, Feinschliff
 - Ergebnis: Produktionsreife Applikation
 
-Sprechnotiz: Hier den roten Faden zeigen. Was war geplant, was hat sich geändert? Die Jira-Integration hat mehr Sprints gebraucht als geplant. Die SP-Empfehlung kam als Anforderung erst spät dazu. Das zeigt, warum iteratives Vorgehen richtig war.
+Sprechnotiz: Straff halten (4 min für 16 Sprints = ca. 15 s pro Sprint im Schnitt). Nicht jeden Sprint einzeln durchgehen — den roten Faden zeigen: Phase 1 schnell, Phase 2 wegen Jira-Schwierigkeiten zwei Sprints länger als geplant, Phase 3 mit klaren Modulen, Phase 4 Deployment + nachgereichte SP-Empfehlung. Das zeigt, warum iteratives Vorgehen richtig war.
 
 ---
 
@@ -332,18 +369,16 @@ Sprechnotiz: Hier den roten Faden zeigen. Was war geplant, was hat sich geänder
 
 ---
 
-### Folie 17 -- Live-Demo (8 min)
+### Folie 17 -- Live-Demo (5 min)
 
-**Ablauf der Demo:**
+**Fokus-Demo (4 Kernansichten):**
 
-1. Login (Microsoft Entra ID)
-2. Dashboard -- Projektübersicht, Kennzahlen
-3. Kapazitätsplanung -- Wochenweise Eingabe, Kategorien, SP-Empfehlung
-4. Sprint Analytics -- Burndown-Chart, Velocity-Vergleich
-5. Scope Changes -- Welche Stories kamen hinzu?
-6. Sprint History -- Velocity-Balkendiagramm
+1. Dashboard kurz -- Projekt-KPIs, Velocity-Trend (45 s)
+2. Kapazitätsplanung -- Wochenweise Eingabe + **SP-Empfehlung in Aktion** (1 min 30 s)
+3. Sprint Analytics -- Burndown-Chart + Compare-Ansicht (1 min 30 s)
+4. Sprint History -- Velocity-Balkendiagramm (45 s)
 
-Sprechnotiz: Die Demo vorbereiten und vorher durchspielen. Am besten mit echten Jira-Daten, damit die Synchronisation sichtbar wird. Falls die Jira-Verbindung nicht funktioniert: Screenshots als Backup.
+Sprechnotiz: Die Demo straff halten, 5 Minuten ist hart. Login, Scope Changes und Retrospective bewusst weglassen — wenn ein Experte nachfragt, kann ich es im Expertengespräch zeigen. Vorher 2-3× durchspielen mit Timer. Demo-Backup: Screenshots auf den Folien 23-34 der pptx sind bereits eingebunden, falls Jira oder Azure nicht erreichbar sind.
 
 ---
 
@@ -416,14 +451,17 @@ Sprintify gibt dem Team eine datenbasierte Antwort auf die Frage: "Wie viele Sto
 |-------|--------|-------|
 | Vorstellung, Problem, Auftrag | 1--5 | 9 min |
 | Marktanalyse, Vorgehen | 6--7 | 5 min |
+| KI als Co-Engineer | 7b | 2 min |
 | Architektur, Datenmodell, Sicherheit | 8--10 | 7 min |
 | Jira-Integration | 11 | 4 min |
 | Module (Capacity, Analytics, History) | 12--14 | 9 min |
-| Entwicklungsprozess, Deployment | 15--16 | 7 min |
-| Live-Demo | 17 | 8 min |
+| Entwicklungsprozess, Deployment | 15--16 | 6 min |
+| Live-Demo (Fokus auf 4 Kernansichten) | 17 | 5 min |
 | Kritische Würdigung, Reflexion | 18--19 | 7 min |
 | Empfehlung, Abschluss | 20--21 | 3 min |
-| **Gesamt** | | **~59 min** |
+| **Gesamt** | | **~57 min** |
+
+Hinweis: 57 min lässt 3 Minuten Puffer vor dem 60-min-Limit. Bei nervöser Erstdurchführung neigt man dazu, schneller zu reden — also eher kein Problem.
 
 ---
 

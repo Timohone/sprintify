@@ -111,7 +111,10 @@ class JiraSyncService {
       const sprint = await Sprint.findByPk(sprintId);
       if (sprint) sprints = [sprint];
     } else {
-      sprints = await Sprint.findAll({ where: { projectId: this.project.id } });
+      sprints = await Sprint.findAll({
+        where: { projectId: this.project.id },
+        order: [['startDate', 'ASC']]
+      });
     }
 
     let syncedCount = 0;

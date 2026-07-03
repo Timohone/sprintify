@@ -24,8 +24,8 @@ Die Bandbreite ergibt sich aus der nutzungsabhängigen Abrechnung von Azure. Der
 
 **Vergleich mit kommerziellen Alternativen:**
 
-- **Tempo Timesheets:** ca. CHF 10/User/Monat. Bei 8 Teammitgliedern ergibt das CHF 960/Jahr — und deckt nur Zeiterfassung ab, keine Kapazitätsplanung.
-- **Jira Advanced Roadmaps:** Teil von Jira Premium, ca. CHF 16/User/Monat. Bei 8 Nutzern sind das CHF 1'536/Jahr.
+- **Tempo Timesheets:** ca. CHF 10/User/Monat gemäss Atlassian Marketplace [Tempo2026]. Bei 8 Teammitgliedern ergibt das CHF 960/Jahr — und deckt nur Zeiterfassung ab, keine Kapazitätsplanung.
+- **Jira Advanced Roadmaps:** Teil von Jira Premium, ca. CHF 16/User/Monat laut offizieller Atlassian-Preisliste [Atlassian2026]. Bei 8 Nutzern sind das CHF 1'536/Jahr.
 - **Sprintify:** ca. CHF 630/Jahr (Mittelwert), deckt Kapazitätsplanung und Sprint Analytics ab.
 
 ## 3. Nutzen

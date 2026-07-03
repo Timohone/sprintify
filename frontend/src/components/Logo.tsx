@@ -1,0 +1,53 @@
+interface LogoProps {
+  size?: number;
+  className?: string;
+}
+
+export function Logo({ size = 32, className = '' }: LogoProps) {
+  // Original aspect ratio is 70:40 (1.75:1)
+  const width = size * 1.75;
+  const height = size;
+
+  return (
+    <svg
+      width={width}
+      height={height}
+      viewBox="0 0 70 40"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+      style={{ shapeRendering: 'geometricPrecision' }}
+    >
+      <path
+        d="M37.26 1.62
+           C38.18 0.65 39.44 0.11 40.75 0.11
+           C46.63 0.11 52.18 0.11 57.64 0.11
+           C68.63 0.11 74.13 13.93 66.36 22.02
+           L49.44 39.62
+           C48.66 40.43 47.33 39.86 47.33 38.71
+           V23.21
+           L49.29 21.17
+           C50.84 19.56 49.74 16.79 47.55 16.79
+           H22.67
+           L37.26 1.62
+           Z"
+        fill="#3A04FF"
+      />
+      <path
+        d="M32.74 38.38
+           C31.82 39.35 30.56 39.89 29.25 39.89
+           C23.37 39.89 17.82 39.89 12.36 39.89
+           C1.37 39.89 -4.13 26.07 3.64 17.98
+           L20.56 0.38
+           C21.34 -0.43 22.67 0.14 22.67 1.29
+           L22.67 16.79
+           L20.71 18.83
+           C19.16 20.44 20.26 23.21 22.46 23.21
+           L47.33 23.21
+           L32.74 38.38
+           Z"
+        fill="#3A04FF"
+      />
+    </svg>
+  );
+}

@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useMsal } from '@azure/msal-react';
 import { LayoutDashboard, Zap, History, Users, FolderKanban, Calendar, BarChart3, MessageSquare, LogOut, ChevronRight, ChevronDown } from 'lucide-react';
 import { useProject } from '../context/ProjectContext';
+import { Logo } from './Logo';
 
 const nav = [
   { to: '/', label: 'Dashboard', icon: LayoutDashboard },
@@ -29,7 +30,7 @@ export function Layout({ children }: { children: ReactNode }) {
     <div className="min-h-screen flex">
       <aside className="w-64 bg-gradient-to-b from-slate-900 to-slate-800 text-white flex flex-col shadow-xl">
         <div className="px-6 py-5 flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-indigo-500 flex items-center justify-center font-bold text-sm">S</div>
+          <Logo size={28} />
           <span className="text-lg font-semibold tracking-tight">Sprintify</span>
         </div>
 
